@@ -9,10 +9,10 @@ import (
 )
 
 type PictureService struct {
-	pictureRepository *port.PictureRepository
+	pictureRepository port.PictureRepository
 }
 
-func NewPictureService(pictureRepository *port.PictureRepository) *PictureService {
+func NewPictureService(pictureRepository port.PictureRepository) *PictureService {
 	return &PictureService{
 		pictureRepository: pictureRepository,
 	}
