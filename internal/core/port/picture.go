@@ -10,13 +10,13 @@ import (
 type PictureService interface {
 	Create(context.Context, *domain.Picture) (*domain.Picture, error)
 	Find(context.Context, uuid.UUID) (*domain.Picture, error)
-	Update(context.Context, *domain.Picture) (*domain.Picture, error)
+	Update(context.Context, *domain.Picture) error
 	Delete(context.Context, uuid.UUID) error
 }
 
 type PictureRepository interface {
 	Create(context.Context, *domain.Picture) (*domain.Picture, error)
 	Find(context.Context, uuid.UUID) (*domain.Picture, error)
-	Update(context.Context, *domain.Picture) (*domain.Picture, error)
+	Update(context.Context, *domain.Picture) error
 	Delete(context.Context, uuid.UUID) error
 }
