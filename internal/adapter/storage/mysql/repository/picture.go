@@ -2,17 +2,17 @@ package repository
 
 import (
 	"context"
-	"letsgo-mini-is/internal/adapter/storage/mysql/ent"
+	"letsgo-mini-is/internal/adapter/storage/mysql"
 	"letsgo-mini-is/internal/core/domain"
 
 	"github.com/google/uuid"
 )
 
 type PictureRepository struct {
-	client *ent.Client
+	client *mysql.DB
 }
 
-func NewPictureRepository(client *ent.Client) *PictureRepository {
+func NewPictureRepository(client *mysql.DB) *PictureRepository {
 	return &PictureRepository{
 		client: client,
 	}
@@ -22,6 +22,7 @@ func (r *PictureRepository) Create(c context.Context, p *domain.Picture) (*domai
 	res, err := r.client.Picture.Create().
 		SetID(p.ID).
 		SetContent(p.Content).
+		SetExtension(p.Extension).
 		Save(c)
 	return domainOf(res), err
 }
