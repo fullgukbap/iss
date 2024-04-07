@@ -9,9 +9,9 @@ import (
 	"log"
 	"reflect"
 
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/migrate"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/migrate"
 
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"

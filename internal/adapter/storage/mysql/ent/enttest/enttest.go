@@ -4,11 +4,11 @@ package enttest
 
 import (
 	"context"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent"
 	// required by schema hooks.
-	_ "letsgo-mini-is/internal/adapter/repositories/mysql/ent/runtime"
+	_ "letsgo-mini-is/internal/adapter/storage/mysql/ent/runtime"
 
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/migrate"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

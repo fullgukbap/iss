@@ -5,7 +5,7 @@ package hook
 import (
 	"context"
 	"fmt"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent"
 )
 
 // The PictureFunc type is an adapter to allow the use of ordinary

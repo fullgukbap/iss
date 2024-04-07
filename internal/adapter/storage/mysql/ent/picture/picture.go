@@ -13,6 +13,8 @@ const (
 	FieldID = "id"
 	// FieldContent holds the string denoting the content field in the database.
 	FieldContent = "content"
+	// FieldExtension holds the string denoting the extension field in the database.
+	FieldExtension = "extension"
 	// Table holds the table name of the picture in the database.
 	Table = "pictures"
 )
@@ -21,6 +23,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldContent,
+	FieldExtension,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -44,4 +47,9 @@ type OrderOption func(*sql.Selector)
 // ByID orders the results by the id field.
 func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByExtension orders the results by the extension field.
+func ByExtension(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldExtension, opts...).ToFunc()
 }

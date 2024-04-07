@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/predicate"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -30,6 +30,20 @@ func (pu *PictureUpdate) Where(ps ...predicate.Picture) *PictureUpdate {
 // SetContent sets the "content" field.
 func (pu *PictureUpdate) SetContent(b []byte) *PictureUpdate {
 	pu.mutation.SetContent(b)
+	return pu
+}
+
+// SetExtension sets the "extension" field.
+func (pu *PictureUpdate) SetExtension(s string) *PictureUpdate {
+	pu.mutation.SetExtension(s)
+	return pu
+}
+
+// SetNillableExtension sets the "extension" field if the given value is not nil.
+func (pu *PictureUpdate) SetNillableExtension(s *string) *PictureUpdate {
+	if s != nil {
+		pu.SetExtension(*s)
+	}
 	return pu
 }
 
@@ -90,6 +104,9 @@ func (pu *PictureUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := pu.mutation.Content(); ok {
 		_spec.SetField(picture.FieldContent, field.TypeBytes, value)
 	}
+	if value, ok := pu.mutation.Extension(); ok {
+		_spec.SetField(picture.FieldExtension, field.TypeString, value)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{picture.Label}
@@ -113,6 +130,20 @@ type PictureUpdateOne struct {
 // SetContent sets the "content" field.
 func (puo *PictureUpdateOne) SetContent(b []byte) *PictureUpdateOne {
 	puo.mutation.SetContent(b)
+	return puo
+}
+
+// SetExtension sets the "extension" field.
+func (puo *PictureUpdateOne) SetExtension(s string) *PictureUpdateOne {
+	puo.mutation.SetExtension(s)
+	return puo
+}
+
+// SetNillableExtension sets the "extension" field if the given value is not nil.
+func (puo *PictureUpdateOne) SetNillableExtension(s *string) *PictureUpdateOne {
+	if s != nil {
+		puo.SetExtension(*s)
+	}
 	return puo
 }
 
@@ -202,6 +233,9 @@ func (puo *PictureUpdateOne) sqlSave(ctx context.Context) (_node *Picture, err e
 	}
 	if value, ok := puo.mutation.Content(); ok {
 		_spec.SetField(picture.FieldContent, field.TypeBytes, value)
+	}
+	if value, ok := puo.mutation.Extension(); ok {
+		_spec.SetField(picture.FieldExtension, field.TypeString, value)
 	}
 	_node = &Picture{config: puo.config}
 	_spec.Assign = _node.assignValues

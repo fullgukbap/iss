@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/predicate"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

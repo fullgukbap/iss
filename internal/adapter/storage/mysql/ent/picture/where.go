@@ -3,7 +3,7 @@
 package picture
 
 import (
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/predicate"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"
@@ -59,6 +59,11 @@ func Content(v []byte) predicate.Picture {
 	return predicate.Picture(sql.FieldEQ(FieldContent, v))
 }
 
+// Extension applies equality check predicate on the "extension" field. It's identical to ExtensionEQ.
+func Extension(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldEQ(FieldExtension, v))
+}
+
 // ContentEQ applies the EQ predicate on the "content" field.
 func ContentEQ(v []byte) predicate.Picture {
 	return predicate.Picture(sql.FieldEQ(FieldContent, v))
@@ -97,6 +102,71 @@ func ContentLT(v []byte) predicate.Picture {
 // ContentLTE applies the LTE predicate on the "content" field.
 func ContentLTE(v []byte) predicate.Picture {
 	return predicate.Picture(sql.FieldLTE(FieldContent, v))
+}
+
+// ExtensionEQ applies the EQ predicate on the "extension" field.
+func ExtensionEQ(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldEQ(FieldExtension, v))
+}
+
+// ExtensionNEQ applies the NEQ predicate on the "extension" field.
+func ExtensionNEQ(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldNEQ(FieldExtension, v))
+}
+
+// ExtensionIn applies the In predicate on the "extension" field.
+func ExtensionIn(vs ...string) predicate.Picture {
+	return predicate.Picture(sql.FieldIn(FieldExtension, vs...))
+}
+
+// ExtensionNotIn applies the NotIn predicate on the "extension" field.
+func ExtensionNotIn(vs ...string) predicate.Picture {
+	return predicate.Picture(sql.FieldNotIn(FieldExtension, vs...))
+}
+
+// ExtensionGT applies the GT predicate on the "extension" field.
+func ExtensionGT(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldGT(FieldExtension, v))
+}
+
+// ExtensionGTE applies the GTE predicate on the "extension" field.
+func ExtensionGTE(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldGTE(FieldExtension, v))
+}
+
+// ExtensionLT applies the LT predicate on the "extension" field.
+func ExtensionLT(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldLT(FieldExtension, v))
+}
+
+// ExtensionLTE applies the LTE predicate on the "extension" field.
+func ExtensionLTE(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldLTE(FieldExtension, v))
+}
+
+// ExtensionContains applies the Contains predicate on the "extension" field.
+func ExtensionContains(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldContains(FieldExtension, v))
+}
+
+// ExtensionHasPrefix applies the HasPrefix predicate on the "extension" field.
+func ExtensionHasPrefix(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldHasPrefix(FieldExtension, v))
+}
+
+// ExtensionHasSuffix applies the HasSuffix predicate on the "extension" field.
+func ExtensionHasSuffix(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldHasSuffix(FieldExtension, v))
+}
+
+// ExtensionEqualFold applies the EqualFold predicate on the "extension" field.
+func ExtensionEqualFold(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldEqualFold(FieldExtension, v))
+}
+
+// ExtensionContainsFold applies the ContainsFold predicate on the "extension" field.
+func ExtensionContainsFold(v string) predicate.Picture {
+	return predicate.Picture(sql.FieldContainsFold(FieldExtension, v))
 }
 
 // And groups predicates with the AND operator between them.

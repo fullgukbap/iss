@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -23,6 +23,12 @@ type PictureCreate struct {
 // SetContent sets the "content" field.
 func (pc *PictureCreate) SetContent(b []byte) *PictureCreate {
 	pc.mutation.SetContent(b)
+	return pc
+}
+
+// SetExtension sets the "extension" field.
+func (pc *PictureCreate) SetExtension(s string) *PictureCreate {
+	pc.mutation.SetExtension(s)
 	return pc
 }
 
@@ -74,6 +80,9 @@ func (pc *PictureCreate) check() error {
 			return &ValidationError{Name: "content", err: fmt.Errorf(`ent: validator failed for field "Picture.content": %w`, err)}
 		}
 	}
+	if _, ok := pc.mutation.Extension(); !ok {
+		return &ValidationError{Name: "extension", err: errors.New(`ent: missing required field "Picture.extension"`)}
+	}
 	return nil
 }
 
@@ -112,6 +121,10 @@ func (pc *PictureCreate) createSpec() (*Picture, *sqlgraph.CreateSpec) {
 	if value, ok := pc.mutation.Content(); ok {
 		_spec.SetField(picture.FieldContent, field.TypeBytes, value)
 		_node.Content = value
+	}
+	if value, ok := pc.mutation.Extension(); ok {
+		_spec.SetField(picture.FieldExtension, field.TypeString, value)
+		_node.Extension = value
 	}
 	return _node, _spec
 }

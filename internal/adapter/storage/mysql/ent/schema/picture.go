@@ -15,5 +15,6 @@ func (Picture) Fields() []ent.Field {
 		field.UUID("id", uuid.New()),
 		field.Bytes("content").
 			MaxLen(1000000),
+		field.String("extension"),
 	}
 }

@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/schema"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/schema"
 )
 
 // The init function reads all schema descriptors with runtime code

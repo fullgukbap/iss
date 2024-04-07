@@ -4,7 +4,7 @@ package ent
 
 import (
 	"fmt"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
 	"strings"
 
 	"entgo.io/ent"
@@ -18,7 +18,9 @@ type Picture struct {
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
 	// Content holds the value of the "content" field.
-	Content      []byte `json:"content,omitempty"`
+	Content []byte `json:"content,omitempty"`
+	// Extension holds the value of the "extension" field.
+	Extension    string `json:"extension,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -29,6 +31,8 @@ func (*Picture) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case picture.FieldContent:
 			values[i] = new([]byte)
+		case picture.FieldExtension:
+			values[i] = new(sql.NullString)
 		case picture.FieldID:
 			values[i] = new(uuid.UUID)
 		default:
@@ -57,6 +61,12 @@ func (pi *Picture) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field content", values[i])
 			} else if value != nil {
 				pi.Content = *value
+			}
+		case picture.FieldExtension:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field extension", values[i])
+			} else if value.Valid {
+				pi.Extension = value.String
 			}
 		default:
 			pi.selectValues.Set(columns[i], values[i])
@@ -96,6 +106,9 @@ func (pi *Picture) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v, ", pi.ID))
 	builder.WriteString("content=")
 	builder.WriteString(fmt.Sprintf("%v", pi.Content))
+	builder.WriteString(", ")
+	builder.WriteString("extension=")
+	builder.WriteString(pi.Extension)
 	builder.WriteByte(')')
 	return builder.String()
 }

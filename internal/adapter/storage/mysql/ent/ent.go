@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"letsgo-mini-is/internal/adapter/repositories/mysql/ent/picture"
+	"letsgo-mini-is/internal/adapter/storage/mysql/ent/picture"
 	"reflect"
 	"sync"
 

@@ -12,6 +12,7 @@ var (
 	PicturesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID},
 		{Name: "content", Type: field.TypeBytes, Size: 1000000},
+		{Name: "extension", Type: field.TypeString},
 	}
 	// PicturesTable holds the schema information for the "pictures" table.
 	PicturesTable = &schema.Table{
