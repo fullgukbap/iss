@@ -108,9 +108,6 @@ func (h *PictureHandler) Update(c *fiber.Ctx) error {
 	if err != nil {
 		return exception.NewInternalErrorException(err, "열람한 이미지를 byte로 변환했더니 에러가 발생하였습니다.")
 	}
-	if err != nil {
-		return exception.NewInternalErrorException(err)
-	}
 
 	ext := filepath.Ext(file.Filename)
 
