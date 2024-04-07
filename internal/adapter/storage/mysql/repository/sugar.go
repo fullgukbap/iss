@@ -10,7 +10,8 @@ func domainOf(entity *ent.Picture) *domain.Picture {
 		return nil
 	}
 	return &domain.Picture{
-		ID:      entity.ID,
-		Content: entity.Content,
+		ID:        entity.ID,
+		Content:   entity.Content,
+		Extension: entity.Extension,
 	}
 }
