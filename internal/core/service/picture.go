@@ -19,17 +19,17 @@ func NewPictureService(pictureRepository port.PictureRepository) *PictureService
 }
 
 func (s *PictureService) Create(c context.Context, p *domain.Picture) (*domain.Picture, error) {
-	return s.Create(c, p)
+	return s.pictureRepository.Create(c, p)
 }
 
 func (s *PictureService) Find(c context.Context, id uuid.UUID) (*domain.Picture, error) {
-	return s.Find(c, id)
+	return s.pictureRepository.Find(c, id)
 }
 
-func (s *PictureService) Update(c context.Context, p *domain.Picture) (*domain.Picture, error) {
-	return s.Update(c, p)
+func (s *PictureService) Update(c context.Context, p *domain.Picture) error {
+	return s.pictureRepository.Update(c, p)
 }
 
 func (s *PictureService) Delete(c context.Context, id uuid.UUID) error {
-	return s.Delete(c, id)
+	return s.pictureRepository.Delete(c, id)
 }
