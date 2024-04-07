@@ -2,11 +2,14 @@ package http
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"letsgo-mini-is/internal/adapter/handler/http/dto"
 	"letsgo-mini-is/internal/adapter/handler/http/exception"
 	"letsgo-mini-is/internal/core/domain"
 	"letsgo-mini-is/internal/core/port"
+	"path/filepath"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -38,9 +41,11 @@ func (h *PictureHandler) Create(c *fiber.Ctx) error {
 		return exception.NewInternalErrorException(err, "열람한 이미지를 byte로 변환했더니 에러가 발생하였습니다.")
 	}
 
+	ext := filepath.Ext(file.Filename)
 	res, err := h.pictureService.Create(c.Context(), &domain.Picture{
-		ID:      uuid.New(),
-		Content: content,
+		ID:        uuid.New(),
+		Content:   content,
+		Extension: strings.Split(ext, ".")[1],
 	})
 	if err != nil {
 		return exception.NewInternalErrorException(err)
@@ -54,13 +59,19 @@ func (h *PictureHandler) Create(c *fiber.Ctx) error {
 }
 
 func (h *PictureHandler) Find(c *fiber.Ctx) error {
-	id := c.Query("id")
+	id := c.Params("id")
 	if id == "" {
-		return exception.NewParsingFailedExceptino(errors.New("Query Params의 값이 제대로 넘어 오지 않았습니다."))
+		return exception.NewParsingFailedExceptino(errors.New("id의 값이 제대로 넘어 오지 않았습니다."))
 	}
-	uuid, err := uuid.FromBytes([]byte(id))
+
+	err := uuid.Validate(id)
 	if err != nil {
 		return exception.NewInvalidUUIDException(err)
+	}
+
+	uuid, err := uuid.Parse(id)
+	if err != nil {
+		return exception.NewInternalErrorException(err, "string uuid를 google.uuid로 parse 하던 중 에레가 발생했습니다.")
 	}
 
 	res, err := h.pictureService.Find(c.Context(), uuid)
@@ -68,7 +79,9 @@ func (h *PictureHandler) Find(c *fiber.Ctx) error {
 		return exception.NewInternalErrorException(err)
 	}
 
-	// c.Set(key string, val string)
+	fmt.Println(res.Extension)
+	key := fmt.Sprintf("image/%s", res.Extension)
+	c.Set("Content-Type", key)
 	return c.Status(fiber.StatusOK).Send(res.Content)
 }
 
@@ -95,10 +108,16 @@ func (h *PictureHandler) Update(c *fiber.Ctx) error {
 	if err != nil {
 		return exception.NewInternalErrorException(err, "열람한 이미지를 byte로 변환했더니 에러가 발생하였습니다.")
 	}
+	if err != nil {
+		return exception.NewInternalErrorException(err)
+	}
+
+	ext := filepath.Ext(file.Filename)
 
 	err = h.pictureService.Update(c.Context(), &domain.Picture{
-		ID:      uuid,
-		Content: content,
+		ID:        uuid,
+		Content:   content,
+		Extension: strings.Split(ext, ".")[1],
 	})
 
 	if err != nil {
