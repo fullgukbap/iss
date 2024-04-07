@@ -1,27 +1,38 @@
 package http
 
 import (
-	"errors"
+	"letsgo-mini-is/internal/adapter/handler/http/dto"
 	"letsgo-mini-is/internal/adapter/handler/http/exception"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func customErrorHandler(c *fiber.Ctx, err error) error {
-	if errors.As(err, &exception.ParsingFailedException{}) {
-		exception := err.(*exception.ParsingFailedException)
-		return c.Status(exception.Status).SendString(err.Error())
+
+	switch err.(type) {
+	case *exception.InternalErrorException:
+		e := err.(*exception.InternalErrorException)
+		return c.Status(e.Status).JSON(&dto.GeneralResponse{
+			Code:    e.Status,
+			Message: e.Error(),
+		})
+
+	case *exception.ParsingFailedException:
+		e := err.(*exception.ParsingFailedException)
+		return c.Status(e.Status).JSON(&dto.GeneralResponse{
+			Code:    e.Status,
+			Message: e.Error(),
+		})
+
+	case *exception.InvalidUUIDException:
+		e := err.(*exception.InvalidUUIDException)
+		return c.Status(e.Status).JSON(&dto.GeneralResponse{
+			Code:    e.Status,
+			Message: e.Error(),
+		})
+
 	}
 
-	if errors.As(err, &exception.InternalErrorException{}) {
-		exception := err.(*exception.InternalErrorException)
-		return c.Status(exception.Status).SendString(err.Error())
-	}
-
-	if errors.As(err, &exception.InvalidUUIDException{}) {
-		exception := err.(*exception.InvalidUUIDException)
-		return c.Status(exception.Status).SendString(err.Error())
-	}
-
-	return c.SendStatus(fiber.StatusNotFound)
+	return fiber.DefaultErrorHandler(c, err)
+	// return c.SendStatus(fiber.StatusNotFound)
 }
