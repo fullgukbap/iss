@@ -36,5 +36,5 @@ func New(ctx context.Context, config *config.DB) (*DB, error) {
 }
 
 func (d *DB) Close() error {
-	return d.Close()
+	return d.Client.Close()
 }

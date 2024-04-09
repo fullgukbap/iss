@@ -17,11 +17,9 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/philhofer/fwd v1.1.2 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
-	github.com/tinylib/msgp v1.1.8 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
@@ -29,7 +27,7 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.19.1-0.20240203083654-5948b60a8e43 // indirect
+	ariga.io/atlas v0.21.1 // indirect
 	entgo.io/ent v0.13.1
 	github.com/agext/levenshtein v1.2.1 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect

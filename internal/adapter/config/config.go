@@ -12,11 +12,12 @@ type Container struct {
 }
 
 type DB struct {
-	Username string
-	Password string
-	Host     string
-	Port     string
-	Database string
+	Username    string
+	Password    string
+	Host        string
+	Port        string
+	Database    string
+	IsMigration string
 }
 
 type HTTP struct {
@@ -33,11 +34,12 @@ func New() (*Container, error) {
 	}
 
 	DB := &DB{
-		Username: os.Getenv("DB_USERNAME"),
-		Password: os.Getenv("DB_PASSWORD"),
-		Host:     os.Getenv("DB_HOST"),
-		Port:     os.Getenv("DB_PORT"),
-		Database: os.Getenv("DB_DATABASE"),
+		Username:    os.Getenv("DB_USERNAME"),
+		Password:    os.Getenv("DB_PASSWORD"),
+		Host:        os.Getenv("DB_HOST"),
+		Port:        os.Getenv("DB_PORT"),
+		Database:    os.Getenv("DB_DATABASE"),
+		IsMigration: os.Getenv("DB_IS_MIGRATION"),
 	}
 
 	return &Container{
