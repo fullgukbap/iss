@@ -2,6 +2,6 @@ package dto
 
 type GeneralResponse struct {
 	Code    int    `json:"code"`
-	Message string `json:"messsage"`
+	Message string `json:"message"`
 	Data    any    `json:"data"`
 }

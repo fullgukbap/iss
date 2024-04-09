@@ -1,14 +1,11 @@
 package http
 
 import (
-	"time"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/helmet"
-	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
@@ -25,16 +22,16 @@ func NewRouter(pictureHandler *PictureHandler) (*Router, error) {
 	app.Use(helmet.New())
 	app.Use(cors.New(cors.Config{
 		AllowHeaders: "Origin,Content-Type,Accept,Content-Length,Accept-Language,Accept-Encoding,Connection,Access-Control-Allow-Origin",
-		// AllowOrigins:     "*",
+		AllowOrigins: "*",
 		// AllowCredentials: true,
 		AllowMethods: "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
 	}))
 
-	app.Use(limiter.New(limiter.Config{
-		Max:               20,
-		Expiration:        30 * time.Second,
-		LimiterMiddleware: limiter.SlidingWindow{},
-	}))
+	// app.Use(limiter.New(limiter.Config{
+	// 	Max:               20,
+	// 	Expiration:        30 * time.Second,
+	// 	LimiterMiddleware: limiter.SlidingWindow{},
+	// }))
 	// Or extend your config for customization
 	app.Use(compress.New(compress.Config{
 		Level: compress.LevelBestSpeed, // 1
@@ -50,10 +47,12 @@ func NewRouter(pictureHandler *PictureHandler) (*Router, error) {
 		Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
 	}))
 
-	app.Post("/api/picture", pictureHandler.Create)
-	app.Get("/api/picture/:id", pictureHandler.Find)
-	app.Put("/api/picture", pictureHandler.Update)
-	app.Delete("/api/picture", pictureHandler.Delete)
+	api := app.Group("/v1/api")
+
+	api.Post("/picture", pictureHandler.Create)
+	api.Get("/picture/:id", pictureHandler.Find)
+	api.Put("/picture", pictureHandler.Update)
+	api.Delete("/picture", pictureHandler.Delete)
 
 	return &Router{App: app}, nil
 }
