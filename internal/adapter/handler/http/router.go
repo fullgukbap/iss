@@ -51,7 +51,7 @@ func NewRouter(pictureHandler *PictureHandler) (*Router, error) {
 
 	api.Post("/picture", pictureHandler.Create)
 	api.Get("/picture/:id", pictureHandler.Find)
-	api.Put("/picture:/id", pictureHandler.Update)
+	api.Put("/picture/:id", pictureHandler.Update)
 	api.Delete("/picture/:id", pictureHandler.Delete)
 
 	return &Router{App: app}, nil
